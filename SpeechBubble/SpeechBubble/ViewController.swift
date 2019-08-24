@@ -9,8 +9,18 @@
 import UIKit
 import SceneKit
 import ARKit
+import AVFoundation
+import Speech
 
 class ViewController: UIViewController, ARSCNViewDelegate {
+    
+    //Speech Recognizer
+    let audioEngine = AVAudioEngine()
+    let speechRecognizer = SFSpeechRecognizer()
+    let speechRequest = SFSpeechAudioBufferRecognitionRequest()
+    var recognitionTask: SFSpeechRecognitionTask?
+    
+    var speechText : String?
 
     @IBOutlet var sceneView: ARSCNView!
     
@@ -92,8 +102,40 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     // Updates bubble with text
-    func updateText() {
+    func updateText() {}
+            
+    // Updates variable "speechText" with the speech recognized
+    private func startRecording() throws {
         
+        //microphone
+        let node = audioEngine.inputNode
+        let recordingFormat = node.outputFormat(forBus: 0)
+        
+        node.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer, _) in
+            self.speechRequest.append(buffer)
+        }
+        
+        audioEngine.prepare()
+        try audioEngine.start()
+        
+        recognitionTask = speechRecognizer?.recognitionTask(with: speechRequest) {
+            [unowned self]
+            (result, _) in
+            if let transcription = result?.bestTranscription {
+                self.speechText = transcription.formattedString
+                if let texto = self.speechText{
+                    print(texto)
+                }
+            }
+        }
+    }
+    
+    private func stopRecording() {
+        audioEngine.stop()
+        speechRequest.endAudio()
+        recognitionTask?.cancel()
+        audioEngine.inputNode.removeTap(onBus: 0)
+        self.speechText = ""
     }
 
     // MARK: - ARSCNViewDelegate
