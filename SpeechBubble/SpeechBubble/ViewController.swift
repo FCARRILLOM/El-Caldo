@@ -11,6 +11,9 @@ import SceneKit
 import ARKit
 import AVFoundation
 import Speech
+import ROGoogleTranslate
+
+
 
 class ViewController: UIViewController, ARSCNViewDelegate {
     
@@ -26,7 +29,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Set the view's delegate
         sceneView.delegate = self
         
@@ -78,9 +80,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             (result, _) in
             if let transcription = result?.bestTranscription {
                 self.speechText = transcription.formattedString
-                if let texto = self.speechText{
-                    print(texto)
-                }
+                //if let texto = self.speechText{
+                  //  print(texto)
+                //}
+                //Translates the text
+                
             }
         }
     }
@@ -91,6 +95,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         recognitionTask?.cancel()
         audioEngine.inputNode.removeTap(onBus: 0)
         self.speechText = ""
+        
     }
 
     // MARK: - ARSCNViewDelegate
@@ -117,5 +122,22 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     func sessionInterruptionEnded(_ session: ARSession) {
         // Reset tracking and/or remove existing anchors if consistent tracking is required
         
+    }
+    
+    
+    
+    func Translate(src: String,tgt: String,txt: String)->String?{
+       
+        
+        let params = ROGoogleTranslateParams(source: src,
+                                             target: tgt,
+                                             text:   txt)
+        var text : String?
+        let translator = ROGoogleTranslate()
+        
+        translator.translate(params: params) { (result) in
+             text = result;
+        }
+        return text
     }
 }
