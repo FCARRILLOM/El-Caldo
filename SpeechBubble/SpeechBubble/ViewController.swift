@@ -24,20 +24,41 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.showsStatistics = true
         
         // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+        let scene = SCNScene(named: "art.scnassets/SpeechBubble.scn")!
         
         // Set the scene to the view
         sceneView.scene = scene
+        sceneView.scene.rootNode.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         // Create a session configuration
-        let configuration = ARWorldTrackingConfiguration()
+        let configuration = ARImageTrackingConfiguration()
+        
+        // Gets images to be tracked
+        guard let arImages = ARReferenceImage.referenceImages(inGroupNamed: "AR Resources",
+                                                              bundle: nil)
+            else {
+                print("No images")
+                return
+            }
+        configuration.trackingImages = arImages
 
         // Run the view's session
         sceneView.session.run(configuration)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        // Root bubble node
+        guard let bubbleNode = sceneView.scene.rootNode.childNode(withName: "Bubble",
+                                                                  recursively: false)
+            else {
+                print("No bubble")
+                return
+        }
+        addTextToBubble(parentNode: bubbleNode)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -45,6 +66,34 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Pause the view's session
         sceneView.session.pause()
+    }
+    
+    // Add text to bubble for the first time
+    func addTextToBubble(parentNode: SCNNode) {
+        let parentPos = parentNode.position
+        let textScale = 0.009
+        
+        let textGeometry = SCNText(string: "...", extrusionDepth: 0.02)
+        textGeometry.firstMaterial?.diffuse.contents = UIColor.black
+                
+        // Length and height used to center text in bubble
+        let textLength = textGeometry.boundingBox.max.x * Float(textScale)
+        let textHeight = textGeometry.boundingBox.max.y * Float(textScale)
+        
+        let textNode = SCNNode()
+        textNode.geometry = textGeometry
+        textNode.position = SCNVector3(parentPos.x + parentNode.boundingBox.max.x,
+                                       parentPos.y - textHeight/2,
+                                       parentPos.z + textLength/2)
+        textNode.scale = SCNVector3(textScale, textScale, 1)
+        textNode.eulerAngles = SCNVector3(0, Float.pi/2, 0)
+        
+        parentNode.addChildNode(textNode)
+    }
+    
+    // Updates bubble with text
+    func updateText() {
+        
     }
 
     // MARK: - ARSCNViewDelegate
@@ -57,6 +106,17 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         return node
     }
 */
+    
+    // Adds node when anchor is found
+    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        guard anchor is ARImageAnchor else { return }
+        sceneView.scene.rootNode.isHidden = false
+        print("QRCode found")
+        guard let bubbleNode = sceneView.scene.rootNode.childNode(withName: "Bubble",
+                                                                  recursively: false) else { return }
+        node.addChildNode(bubbleNode)
+        print("Adding bubble")
+    }
     
     func session(_ session: ARSession, didFailWithError error: Error) {
         // Present an error message to the user
