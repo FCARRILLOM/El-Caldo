@@ -1,0 +1,6 @@
+framework module Pods_SpeechBubble {
+  umbrella header "Pods-SpeechBubble-umbrella.h"
+
+  export *
+  module * { export * }
+}
