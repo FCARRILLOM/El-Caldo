@@ -21,6 +21,24 @@
                             <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BrB-h1-WRS">
                                 <rect key="frame" x="44" y="0.0" width="808" height="393"/>
                             </arscnView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="it8-0J-bxc">
+                                <rect key="frame" x="234" y="337" width="61" height="38"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="Stop:" destination="BV1-FR-VrT" eventType="touchUpInside" id="hLD-1P-rLp"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M3v-hY-S8I">
+                                <rect key="frame" x="78" y="325" width="86" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="Start:" destination="BV1-FR-VrT" eventType="touchUpInside" id="uaz-b7-xU4"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EFX-gd-7jb">
                                 <rect key="frame" x="790" y="20" width="42" height="39"/>
                                 <constraints>
@@ -35,6 +53,14 @@
                                     <segue destination="Uz1-z6-SZH" kind="presentation" id="2F8-lA-HGb"/>
                                 </connections>
                             </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="nWI-g9-juZ">
+                                <rect key="frame" x="509" y="234" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -48,6 +74,7 @@
                         <viewLayoutGuide key="safeArea" id="fQZ-KI-GVf"/>
                     </view>
                     <connections>
+                        <outlet property="DisplayText" destination="nWI-g9-juZ" id="rW8-M8-tg9"/>
                         <outlet property="sceneView" destination="BrB-h1-WRS" id="5nT-qQ-ynl"/>
                     </connections>
                 </viewController>
@@ -64,7 +91,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Translating to" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HSG-tY-LU9">
-                                <rect key="frame" x="342" y="185" width="212" height="45"/>
+                                <rect key="frame" x="368.33333333333331" y="185" width="211.99999999999994" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="HSG-tY-LU9" secondAttribute="height" multiplier="212:45" id="6bq-xD-lGq"/>
                                     <constraint firstAttribute="width" secondItem="HSG-tY-LU9" secondAttribute="height" multiplier="212:45" id="8sU-8d-Ihp"/>
@@ -103,7 +130,7 @@
                                 </connections>
                             </pickerView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Language" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uJk-1i-3J5">
-                                <rect key="frame" x="109" y="89" width="264.66666666666669" height="75.333333333333314"/>
+                                <rect key="frame" x="109" y="89" width="265" height="75.333333333333314"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="uJk-1i-3J5" secondAttribute="height" multiplier="43:12" id="Q3B-BB-6le"/>
                                 </constraints>
@@ -112,7 +139,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H49-rB-QEx">
-                                <rect key="frame" x="562" y="112" width="320" height="255"/>
+                                <rect key="frame" x="588.33333333333337" y="133" width="293.66666666666663" height="234"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="H49-rB-QEx" secondAttribute="height" multiplier="271:216" id="Eda-b1-256"/>
                                 </constraints>
