@@ -81,7 +81,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
     }
     
-    
+    //Function to hide arms
     @IBAction func hideArms(_ sender: Any) {
         if(armsHidden) {
             armNode.isHidden = false
