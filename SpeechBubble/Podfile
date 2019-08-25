@@ -4,5 +4,6 @@ use_frameworks!
 target 'SpeechBubble' do
   
 pod 'ROGoogleTranslate'
+pod 'Canvas', '~> 0.1'
 
 end
