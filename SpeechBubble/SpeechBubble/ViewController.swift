@@ -34,7 +34,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var speechText : String?
 
     @IBOutlet var sceneView: ARSCNView!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Set the view's delegate
