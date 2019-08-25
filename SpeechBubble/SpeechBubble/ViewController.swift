@@ -77,7 +77,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         super.viewWillAppear(animated)
         
         // Create a session configuration
-        let configuration = ARImageTrackingConfiguration()
+        let configuration = ARWorldTrackingConfiguration()
+//        let configuration = ARImageTrackingConfiguration()
         
         // Gets images to be tracked
         guard let arImages = ARReferenceImage.referenceImages(inGroupNamed: "AR Resources",
@@ -86,7 +87,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 print("No images")
                 return
             }
-        configuration.trackingImages = arImages
+        configuration.detectionImages = arImages
+//        configuration.trackingImages = arImages
 
         // Run the view's session
         sceneView.session.run(configuration)
@@ -122,9 +124,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         textGeometry.string = newSentence
         
         let textLength = (textNode.geometry?.boundingBox.max.x)! * Float(textScale)
+        print(textLength)
         textNode.position = SCNVector3(textNode.position.x,
-                                       textNode.position.y,
-                                       rootBubbleNode.position.z + textLength/2) // Allign to left of bubble
+                                       rootBubbleNode.position.y - 0.12, // padding
+                                       -rootBubbleNode.position.z) // Allign to left of bubble
     }
     
     func updateTranslatedText(sentence: String) {
@@ -216,6 +219,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         print("QRCode found")
         guard let bubbleNode = sceneView.scene.rootNode.childNode(withName: "Bubble",
                                                                   recursively: false) else { return }
+        // 0.22, 0, -0.38
+        bubbleNode.position = SCNVector3(0.22, 0, -0.38)
         node.addChildNode(bubbleNode)
         print("Adding bubble")
     }
@@ -236,10 +241,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     
-    
+
     func Translate(src: String,tgt: String,txt: String ){
-       
-       
         let params = ROGoogleTranslateParams(source: src,
                                              target: tgt,
                                              text:   txt)
