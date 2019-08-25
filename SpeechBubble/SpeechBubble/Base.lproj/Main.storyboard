@@ -89,7 +89,9 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v5t-xL-pFj">
                                 <rect key="frame" x="760" y="326" width="72" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Hide Arms"/>
+                                <state key="normal" title="Hide Arms">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <action selector="hideArms:" destination="BV1-FR-VrT" eventType="touchUpInside" id="rbW-W7-KVg"/>
                                 </connections>
@@ -128,7 +130,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Translating to" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HSG-tY-LU9">
-                                <rect key="frame" x="368.33333333333331" y="185" width="211.99999999999994" height="45"/>
+                                <rect key="frame" x="344.66666666666669" y="204.33333333333331" width="212.00000000000006" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="HSG-tY-LU9" secondAttribute="height" multiplier="212:45" id="6bq-xD-lGq"/>
                                     <constraint firstAttribute="width" secondItem="HSG-tY-LU9" secondAttribute="height" multiplier="212:45" id="8sU-8d-Ihp"/>
@@ -157,7 +159,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <pickerView contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q1o-eV-qsd">
-                                <rect key="frame" x="23" y="112.00000000000003" width="320" height="296.66666666666674"/>
+                                <rect key="frame" x="23" y="112.33333333333334" width="320" height="296.33333333333326"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="q1o-eV-qsd" secondAttribute="height" multiplier="233:216" id="j5M-qe-IVG"/>
                                 </constraints>
@@ -167,7 +169,7 @@
                                 </connections>
                             </pickerView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Language" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uJk-1i-3J5">
-                                <rect key="frame" x="109" y="89" width="265" height="75.333333333333314"/>
+                                <rect key="frame" x="109" y="89.333333333333343" width="129" height="94"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="uJk-1i-3J5" secondAttribute="height" multiplier="43:12" id="Q3B-BB-6le"/>
                                 </constraints>
@@ -176,7 +178,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H49-rB-QEx">
-                                <rect key="frame" x="588.33333333333337" y="133" width="293.66666666666663" height="234"/>
+                                <rect key="frame" x="564.66666666666663" y="133.33333333333337" width="317.33333333333337" height="253"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="H49-rB-QEx" secondAttribute="height" multiplier="271:216" id="Eda-b1-256"/>
                                 </constraints>
@@ -186,7 +188,7 @@
                                 </connections>
                             </pickerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LSN-Wq-shg">
-                                <rect key="frame" x="64" y="39" width="42" height="35"/>
+                                <rect key="frame" x="64" y="39.333333333333336" width="42" height="35.000000000000007"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="LSN-Wq-shg" secondAttribute="height" multiplier="6:5" id="qji-HQ-YRd"/>
                                 </constraints>
