@@ -57,6 +57,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var armsHidden = false
 
     @IBOutlet weak var AnimView: CSAnimationView!
+    @IBOutlet weak var Instructions: CSAnimationView!
     @IBOutlet var sceneView: ARSCNView!
     
     @IBAction func Stop(_ sender: Any) {
@@ -92,6 +93,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     override func viewDidLoad() {
+        Instructions.startCanvasAnimation()
         AnimView.isHidden = true
         super.viewDidLoad()
         // Set the view's delegate
@@ -162,8 +164,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         guard let firstObservation = observations.first else { return }
         
+
         if (firstObservation as AnyObject).confidence*100 > 80 {
-            print(observations[0])
+
             if (firstObservation as AnyObject).identifier == "openFist" {
                 do{
                     if(bubbleFound) {
