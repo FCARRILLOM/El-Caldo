@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SpeechBubble/ViewController.swift"
-            timestampString = "588397796.638527"
+            timestampString = "588411081.3911459"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "194"
-            endingLineNumber = "194"
+            startingLineNumber = "209"
+            endingLineNumber = "209"
             landmarkName = "stopRecording()"
             landmarkType = "7">
          </BreakpointContent>
@@ -22,15 +22,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SpeechBubble/ViewController.swift"
-            timestampString = "588397796.638576"
+            timestampString = "588411081.391544"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "196"
-            endingLineNumber = "196"
+            startingLineNumber = "211"
+            endingLineNumber = "211"
             landmarkName = "stopRecording()"
             landmarkType = "7">
          </BreakpointContent>

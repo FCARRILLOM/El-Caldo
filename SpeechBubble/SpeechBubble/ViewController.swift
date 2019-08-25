@@ -12,6 +12,7 @@ import ARKit
 import AVFoundation
 import Speech
 import ROGoogleTranslate
+import Canvas
 
 
 
@@ -31,17 +32,22 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var textGeometry = SCNText()
     let textScale = 0.01
     let languagesKeys:  [String: String] = ["English" :"en", "Spanish" : "es", "German" : "de"]
-    
+    var isRecording = 7
     
     var speechText : String?
 
+    @IBOutlet weak var AnimView: CSAnimationView!
     @IBOutlet var sceneView: ARSCNView!
     
     @IBAction func Stop(_ sender: Any) {
-        
+        AnimView.isHidden = true
         stopRecording()
     }
     @IBAction func Start(_ sender: Any) {
+        AnimView.isHidden = false
+    
+        AnimView.startCanvasAnimation()
+        
         do {
             try startRecording()
         } catch {
@@ -70,7 +76,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.scene.rootNode.isHidden = true
        
     
-       
+       AnimView.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
