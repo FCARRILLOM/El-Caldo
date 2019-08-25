@@ -10,8 +10,10 @@ import UIKit
 import SceneKit
 import ARKit
 import AVFoundation
+import CoreML
 import Speech
 import ROGoogleTranslate
+import Vision
 
 
 
@@ -22,6 +24,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var speechRecognizer = SFSpeechRecognizer()
     let speechRequest = SFSpeechAudioBufferRecognitionRequest()
     var recognitionTask: SFSpeechRecognitionTask?
+    
+    var visionRequests = [VNRequest]()
     
     // AR Nodes
     var rootBubbleNode = SCNNode()
@@ -68,9 +72,74 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Set the scene to the view
         sceneView.scene = scene
         sceneView.scene.rootNode.isHidden = true
-       
+        
+        guard let selectedModel = try? VNCoreMLModel(for: hand().model) else {
+            fatalError("Could not load model. Ensure model has been drag and dropped (copied) to XCode Project.")
+        }
+        
+        let classificationRequest = VNCoreMLRequest(model: selectedModel, completionHandler: classificationCompleteHandler)
+        classificationRequest.imageCropAndScaleOption = VNImageCropAndScaleOption.centerCrop // Crop from centre of images and scale to appropriate size.
+        visionRequests = [classificationRequest]
+        
+        loopCoreMLUpdate()
+    }
     
-       
+    func loopCoreMLUpdate() {
+        // Continuously run CoreML whenever it's ready. (Preventing 'hiccups' in Frame Rate)
+        DispatchQueue.main.async {
+            // 1. Run Update.
+            self.updateCoreML()
+            // 2. Loop this function.
+            self.loopCoreMLUpdate()
+        }
+    }
+    
+    func updateCoreML() {
+        // Get Camera Image as RGB
+        let pixbuff : CVPixelBuffer? = (sceneView.session.currentFrame?.capturedImage)
+        if pixbuff == nil { return }
+        let ciImage = CIImage(cvPixelBuffer: pixbuff!)
+        
+        // Prepare CoreML/Vision Request
+        let imageRequestHandler = VNImageRequestHandler(ciImage: ciImage, options: [:])
+        
+        // Run Vision Image Request
+        do {
+            try imageRequestHandler.perform(self.visionRequests)
+        } catch {
+            print(error)
+        }
+    }
+    
+    func classificationCompleteHandler(request: VNRequest, error: Error?) {
+        // Catch Errors
+        if error != nil {
+            print("Error: " + (error?.localizedDescription)!)
+            return
+        }
+        guard let observations = request.results else {
+            print("No results")
+            return
+        }
+        
+        guard let firstObservation = observations.first else { return }
+        
+        if (firstObservation as AnyObject).confidence*100 > 70 {
+            print(observations[0])
+            if (firstObservation as AnyObject).identifier == "openFist" {
+                do{
+                    try startRecording()
+                }
+                catch {
+                    print("error")
+                }
+            }
+            
+            if (firstObservation as AnyObject).identifier == "closedFist" {
+                stopRecording()
+            }
+        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
