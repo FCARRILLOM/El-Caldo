@@ -34,6 +34,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var textNode = SCNNode()
     var textGeometry = SCNText()
     let textScale = 0.01
+    var bubbleFound = false
     
     // Languages
     let languagesKeys:  [String: String] = ["English" : "en",
@@ -52,6 +53,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     // 3D Arm
     let arms = SCNScene(named: "art.scnassets/arm.dae")!
+    var armNode = SCNNode()
+    var armsHidden = false
 
     @IBOutlet weak var AnimView: CSAnimationView!
     @IBOutlet var sceneView: ARSCNView!
@@ -77,6 +80,17 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
     }
     
+    
+    @IBAction func hideArms(_ sender: Any) {
+        if(armsHidden) {
+            armNode.isHidden = false
+            armsHidden = false
+        } else {
+            armNode.isHidden = true
+            armsHidden = true
+        }
+    }
+    
     override func viewDidLoad() {
         AnimView.isHidden = true
         super.viewDidLoad()
@@ -97,15 +111,15 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sourceLanguage = languagesKeys[UserDefaults.standard.string(forKey: "Input") ?? "English"]!
         targetLanguage = languagesKeys[UserDefaults.standard.string(forKey: "Output") ?? "Spanish"]!
                
-//        guard let selectedModel = try? VNCoreMLModel(for: hand().model) else {
-//            fatalError("Could not load model. Ensure model has been drag and dropped (copied) to XCode Project.")
-//        }
-//
-//        let classificationRequest = VNCoreMLRequest(model: selectedModel, completionHandler: classificationCompleteHandler)
-//        classificationRequest.imageCropAndScaleOption = VNImageCropAndScaleOption.centerCrop // Crop from centre of images and scale to appropriate size.
-//        visionRequests = [classificationRequest]
-//
-//        loopCoreMLUpdate()
+        guard let selectedModel = try? VNCoreMLModel(for: hand().model) else {
+            fatalError("Could not load model. Ensure model has been drag and dropped (copied) to XCode Project.")
+        }
+
+        let classificationRequest = VNCoreMLRequest(model: selectedModel, completionHandler: classificationCompleteHandler)
+        classificationRequest.imageCropAndScaleOption = VNImageCropAndScaleOption.centerCrop // Crop from centre of images and scale to appropriate size.
+        visionRequests = [classificationRequest]
+
+        loopCoreMLUpdate()
     }
     
     func loopCoreMLUpdate() {
@@ -148,14 +162,16 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         guard let firstObservation = observations.first else { return }
         
-        if (firstObservation as AnyObject).confidence*100 > 70 {
+        if (firstObservation as AnyObject).confidence*100 > 80 {
             print(observations[0])
             if (firstObservation as AnyObject).identifier == "openFist" {
                 do{
-                    try startRecording()
-                    recording = true
-                    AnimView.isHidden = false
-                    AnimView.startCanvasAnimation()
+                    if(bubbleFound) {
+                        try startRecording()
+                        recording = true
+                        AnimView.isHidden = false
+                        AnimView.startCanvasAnimation()
+                    }
                 }
                 catch {
                     print("error")
@@ -239,6 +255,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                     self.animateHello(armNode: self.arms.rootNode)
                 } else if(word == "Again" || word == "again") {
                     self.animateAgain(armNode: self.arms.rootNode)
+                } else if(word == "Hungry" || word == "hungry") {
+                    self.animateHungry(armNode: self.arms.rootNode)
                 }
             }
             usleep(500000)
@@ -333,8 +351,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // 0.22, 0, -0.38
         bubbleNode.position = SCNVector3(0.22, 0, -0.38)
         node.addChildNode(bubbleNode)
-        
-        let armNode = arms.rootNode
+        bubbleFound = true
+        armNode = arms.rootNode
         armNode.eulerAngles = SCNVector3(-Float.pi/2, 0, Float.pi)
         armNode.scale = SCNVector3(0.1, 0.1, 0.1)
         armNode.position = SCNVector3(0, 0, 0.15)
@@ -389,6 +407,14 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         helloAnimation.fadeOutDuration = 0.2
         helloAnimation.repeatCount = 1
         armNode.addAnimation(helloAnimation, forKey: "again")
+    }
+    func animateHungry(armNode: SCNNode) {
+        var helloAnimation = CAAnimation()
+        helloAnimation = CAAnimation.animationWithSceneNamed("art.scnassets/armHungry")!
+        helloAnimation.fadeInDuration = 0.2
+        helloAnimation.fadeOutDuration = 0.2
+        helloAnimation.repeatCount = 1
+        armNode.addAnimation(helloAnimation, forKey: "hungry")
     }
 }
 

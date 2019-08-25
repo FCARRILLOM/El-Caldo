@@ -13,9 +13,9 @@
 		07128842231187D2009609D5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07128840231187D2009609D5 /* Main.storyboard */; };
 		07128844231187D4009609D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07128843231187D4009609D5 /* Assets.xcassets */; };
 		07128847231187D4009609D5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07128845231187D4009609D5 /* LaunchScreen.storyboard */; };
+		071288502312E35A009609D5 /* hand.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 0712884F2312E35A009609D5 /* hand.mlmodel */; };
 		0F5F363ECA7B0E92EE120368 /* Pods_SpeechBubble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F377CF677B1150C354402791 /* Pods_SpeechBubble.framework */; };
 		C424276A2311CA8500AC0F58 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42427692311CA8500AC0F58 /* SettingsViewController.swift */; };
-		C4B680422312D19F005625B5 /* hand.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = C4B680412312D19F005625B5 /* hand.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,9 +28,9 @@
 		07128843231187D4009609D5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		07128846231187D4009609D5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		07128848231187D4009609D5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0712884F2312E35A009609D5 /* hand.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = hand.mlmodel; path = ../../../../../Downloads/hand.mlmodel; sourceTree = "<group>"; };
 		4FD17FCDE198750E6E43A91E /* Pods-SpeechBubble.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpeechBubble.debug.xcconfig"; path = "Target Support Files/Pods-SpeechBubble/Pods-SpeechBubble.debug.xcconfig"; sourceTree = "<group>"; };
 		C42427692311CA8500AC0F58 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		C4B680412312D19F005625B5 /* hand.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = hand.mlmodel; path = ../../../../../../Downloads/hand.mlmodel; sourceTree = "<group>"; };
 		F377CF677B1150C354402791 /* Pods_SpeechBubble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SpeechBubble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -73,7 +73,7 @@
 				C42427692311CA8500AC0F58 /* SettingsViewController.swift */,
 				07128840231187D2009609D5 /* Main.storyboard */,
 				07128843231187D4009609D5 /* Assets.xcassets */,
-				C4B680412312D19F005625B5 /* hand.mlmodel */,
+				0712884F2312E35A009609D5 /* hand.mlmodel */,
 				07128845231187D4009609D5 /* LaunchScreen.storyboard */,
 				07128848231187D4009609D5 /* Info.plist */,
 			);
@@ -213,7 +213,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C4B680422312D19F005625B5 /* hand.mlmodel in Sources */,
+				071288502312E35A009609D5 /* hand.mlmodel in Sources */,
 				0712883F231187D2009609D5 /* ViewController.swift in Sources */,
 				0712883B231187D2009609D5 /* AppDelegate.swift in Sources */,
 				C424276A2311CA8500AC0F58 /* SettingsViewController.swift in Sources */,
@@ -364,7 +364,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = NXQD95DQHD;
+				DEVELOPMENT_TEAM = M7CAKG9848;
 				INFOPLIST_FILE = SpeechBubble/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -383,7 +383,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = NXQD95DQHD;
+				DEVELOPMENT_TEAM = M7CAKG9848;
 				INFOPLIST_FILE = SpeechBubble/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
