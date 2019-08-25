@@ -99,15 +99,15 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sourceLanguage = languagesKeys[UserDefaults.standard.string(forKey: "Input") ?? "English"]!
         targetLanguage = languagesKeys[UserDefaults.standard.string(forKey: "Output") ?? "Spanish"]!
                
-//        guard let selectedModel = try? VNCoreMLModel(for: hand().model) else {
-//            fatalError("Could not load model. Ensure model has been drag and dropped (copied) to XCode Project.")
-//        }
-//
-//        let classificationRequest = VNCoreMLRequest(model: selectedModel, completionHandler: classificationCompleteHandler)
-//        classificationRequest.imageCropAndScaleOption = VNImageCropAndScaleOption.centerCrop // Crop from centre of images and scale to appropriate size.
-//        visionRequests = [classificationRequest]
-//
-//        loopCoreMLUpdate()
+       guard let selectedModel = try? VNCoreMLModel(for: hand().model) else {
+            fatalError("Could not load model. Ensure model has been drag and dropped (copied) to XCode Project.")
+       }
+
+       let classificationRequest = VNCoreMLRequest(model: selectedModel, completionHandler: classificationCompleteHandler)
+        classificationRequest.imageCropAndScaleOption = VNImageCropAndScaleOption.centerCrop // Crop from centre of images and scale to appropriate size.
+       visionRequests = [classificationRequest]
+
+        loopCoreMLUpdate()
     }
     
     func loopCoreMLUpdate() {
