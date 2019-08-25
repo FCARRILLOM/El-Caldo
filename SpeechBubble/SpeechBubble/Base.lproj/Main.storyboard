@@ -22,19 +22,19 @@
                                 <rect key="frame" x="44" y="0.0" width="808" height="393"/>
                             </arscnView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="it8-0J-bxc">
-                                <rect key="frame" x="234" y="337" width="61" height="38"/>
+                                <rect key="frame" x="243" y="337" width="43" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="Stop"/>
                                 <connections>
                                     <action selector="Stop:" destination="BV1-FR-VrT" eventType="touchUpInside" id="hLD-1P-rLp"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M3v-hY-S8I">
-                                <rect key="frame" x="78" y="325" width="86" height="48"/>
+                                <rect key="frame" x="90" y="325" width="62" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="Start"/>
                                 <connections>
                                     <action selector="Start:" destination="BV1-FR-VrT" eventType="touchUpInside" id="uaz-b7-xU4"/>
                                 </connections>

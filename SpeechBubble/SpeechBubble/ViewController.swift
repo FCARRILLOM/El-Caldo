@@ -16,8 +16,6 @@ import ROGoogleTranslate
 import Vision
 import Canvas
 
-
-
 class ViewController: UIViewController, ARSCNViewDelegate {
     
     //Speech Recognizer
@@ -25,6 +23,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var speechRecognizer = SFSpeechRecognizer()
     let speechRequest = SFSpeechAudioBufferRecognitionRequest()
     var recognitionTask: SFSpeechRecognitionTask?
+    var recording = false;
     
     var visionRequests = [VNRequest]()
     
@@ -35,27 +34,46 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var textNode = SCNNode()
     var textGeometry = SCNText()
     let textScale = 0.01
-    let languagesKeys:  [String: String] = ["English" :"en", "Spanish" : "es", "German" : "de"]
-    var isRecording = 7
+    
+    // Languages
+    let languagesKeys:  [String: String] = ["English" : "en",
+                                            "French" : "fr",
+                                            "German" : "de",
+                                            "Italian" : "it",
+                                            "Japanese" : "ja",
+                                            "Korean" : "ko",
+                                            "Russian" : "ru",
+                                            "Spanish" : "es",]
+    var isRecording = false
     
     var speechText : String?
+    var sourceLanguage: String?
+    var targetLanguage: String?
+    
+    // 3D Arm
+    let arms = SCNScene(named: "art.scnassets/arm.dae")!
 
     @IBOutlet weak var AnimView: CSAnimationView!
     @IBOutlet var sceneView: ARSCNView!
     
     @IBAction func Stop(_ sender: Any) {
-        AnimView.isHidden = true
-        stopRecording()
+        if(recording) {
+            stopRecording()
+            recording = false
+            AnimView.isHidden = true
+        }
     }
-    @IBAction func Start(_ sender: Any) {
-        AnimView.isHidden = false
     
-        AnimView.startCanvasAnimation()
-        
-        do {
-            try startRecording()
-        } catch {
-            print("Error recording")
+    @IBAction func Start(_ sender: Any) {
+        if(!recording) {
+            do {
+                try startRecording()
+                recording = true
+                AnimView.isHidden = false
+                AnimView.startCanvasAnimation()
+            } catch {
+                print("Error recording")
+            }
         }
     }
     
@@ -78,7 +96,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Set the scene to the view
         sceneView.scene = scene
         sceneView.scene.rootNode.isHidden = true
-        
+       
+        sourceLanguage = languagesKeys[UserDefaults.standard.string(forKey: "Input") ?? "English"]!
+        targetLanguage = languagesKeys[UserDefaults.standard.string(forKey: "Output") ?? "Spanish"]!
+               
         guard let selectedModel = try? VNCoreMLModel(for: hand().model) else {
             fatalError("Could not load model. Ensure model has been drag and dropped (copied) to XCode Project.")
         }
@@ -145,8 +166,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
               AnimView.isHidden = true  
               stopRecording()
             }
-        }
-        
+        }        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -199,18 +219,25 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
         textGeometry.string = newSentence
         
-        let textLength = (textNode.geometry?.boundingBox.max.x)! * Float(textScale)
-        print(textLength)
         textNode.position = SCNVector3(textNode.position.x,
                                        rootBubbleNode.position.y - 0.12, // padding
                                        -rootBubbleNode.position.z) // Allign to left of bubble
     }
     
     func updateTranslatedText(sentence: String) {
+        print("Sentence", sentence)
+        textNode.position = SCNVector3(textNode.position.x,
+                                       rootBubbleNode.position.y - 0.12, // padding
+                                        -rootBubbleNode.position.z) // Allign to left of bubble
         let words = sentence.components(separatedBy: " ")
         for word in words {
-            textGeometry.string = word
-            usleep(400000)
+            DispatchQueue.main.async {
+                self.textGeometry.string = word
+                if(word == "Hello" || word == "hello") {
+                    self.animateHello(armNode: self.arms.rootNode)
+                }
+            }
+            usleep(700000)
         }
     }
     
@@ -258,8 +285,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 self.speechText = transcription.formattedString
 
                 if let texto = self.speechText{
-                    //print(texto)
-                    self.updateTextRealTime(sentence: texto)
+                    // Show sentence real time if it's not being translated
+                    if(self.sourceLanguage == self.targetLanguage) {
+                        self.updateTextRealTime(sentence: texto)
+                    }
                 }
             }
         }
@@ -270,11 +299,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         speechRequest.endAudio()
         recognitionTask?.cancel()
         audioEngine.inputNode.removeTap(onBus: 0)
-        print(self.speechText)
-        if(UserDefaults.standard.string(forKey: "Input") != UserDefaults.standard.string(forKey: "Output")){
-        Translate(src: languagesKeys[UserDefaults.standard.string(forKey: "Input") ?? "English"]!, tgt: languagesKeys[UserDefaults.standard.string(forKey: "Output") ?? "Spanish"]!, txt: self.speechText ?? "")
+        if(sourceLanguage != targetLanguage) {
+            print("Input text:",  self.speechText)
+            if(UserDefaults.standard.string(forKey: "Input") != UserDefaults.standard.string(forKey: "Output")){
+                Translate(src: languagesKeys[UserDefaults.standard.string(forKey: "Input") ?? "English"]!, tgt: languagesKeys[UserDefaults.standard.string(forKey: "Output") ?? "Spanish"]!, txt: self.speechText ?? "")
+            }
         }
-        
     }
 
     // MARK: - ARSCNViewDelegate
@@ -298,6 +328,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // 0.22, 0, -0.38
         bubbleNode.position = SCNVector3(0.22, 0, -0.38)
         node.addChildNode(bubbleNode)
+        
+        let armNode = arms.rootNode
+        armNode.eulerAngles = SCNVector3(-Float.pi/2, 0, Float.pi)
+        armNode.scale = SCNVector3(0.1, 0.1, 0.1)
+        armNode.position = SCNVector3(0, 0, 0.15)
+        node.addChildNode(armNode)
         print("Adding bubble")
     }
     
@@ -325,12 +361,37 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         let translator = ROGoogleTranslate()
         
-        
             translator.translate(params: params) { (result) in
-                DispatchQueue.main.async(){
-                    self.DisplayText.text = result
-                }
+                print("Translating text...")
+                self.updateTranslatedText(sentence: result)
             }
         
+    }
+    
+    // 3D ARM
+    func animateHello(armNode: SCNNode) {
+        var helloAnimation = CAAnimation()
+        helloAnimation = CAAnimation.animationWithSceneNamed("art.scnassets/armHello")!
+        helloAnimation.fadeInDuration = 0.3
+        helloAnimation.fadeOutDuration = 0.3
+        helloAnimation.repeatCount = 1
+        armNode.addAnimation(helloAnimation, forKey: "hello")
+    }
+}
+
+// MARK: CoreAnimation
+
+extension CAAnimation {
+    class func animationWithSceneNamed(_ name: String) -> CAAnimation? {
+        var animation: CAAnimation?
+        if let scene = SCNScene(named: name) {
+            scene.rootNode.enumerateChildNodes({ (child, stop) in
+                if child.animationKeys.count > 0 {
+                    animation = child.animation(forKey: child.animationKeys.first!)
+                    stop.initialize(to: true)
+                }
+            })
+        }
+        return animation
     }
 }
