@@ -19,7 +19,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     //Speech Recognizer
     let audioEngine = AVAudioEngine()
-    let speechRecognizer = SFSpeechRecognizer()
+    var speechRecognizer = SFSpeechRecognizer()
     let speechRequest = SFSpeechAudioBufferRecognitionRequest()
     var recognitionTask: SFSpeechRecognitionTask?
     
@@ -57,7 +57,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         super.viewDidLoad()
         // Set the view's delegate
         sceneView.delegate = self
-       
+        speechRecognizer = SFSpeechRecognizer(locale: Locale.init(identifier: languagesKeys[UserDefaults.standard.string(forKey: "Input") ?? "English"] ?? "en"))
         
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
