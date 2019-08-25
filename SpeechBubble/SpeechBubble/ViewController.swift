@@ -78,6 +78,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     override func viewDidLoad() {
+        AnimView.isHidden = true
         super.viewDidLoad()
         // Set the view's delegate
         sceneView.delegate = self
@@ -152,6 +153,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             if (firstObservation as AnyObject).identifier == "openFist" {
                 do{
                     try startRecording()
+                    recording = true
+                    AnimView.isHidden = false
+                    AnimView.startCanvasAnimation()
                 }
                 catch {
                     print("error")
@@ -159,8 +163,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             }
             
             if (firstObservation as AnyObject).identifier == "closedFist" {
-              AnimView.isHidden = true  
-              stopRecording()
+              AnimView.isHidden = true
+                if(recording) {stopRecording()}
+              recording = false
+              AnimView.isHidden = true
             }
         }        
     }
