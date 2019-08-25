@@ -77,10 +77,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
     }
     
-   
-    @IBOutlet weak var DisplayText: UITextView!
-    
-    
     override func viewDidLoad() {
         AnimView.isHidden = true
         super.viewDidLoad()
@@ -101,15 +97,15 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sourceLanguage = languagesKeys[UserDefaults.standard.string(forKey: "Input") ?? "English"]!
         targetLanguage = languagesKeys[UserDefaults.standard.string(forKey: "Output") ?? "Spanish"]!
                
-        guard let selectedModel = try? VNCoreMLModel(for: hand().model) else {
-            fatalError("Could not load model. Ensure model has been drag and dropped (copied) to XCode Project.")
-        }
-        
-        let classificationRequest = VNCoreMLRequest(model: selectedModel, completionHandler: classificationCompleteHandler)
-        classificationRequest.imageCropAndScaleOption = VNImageCropAndScaleOption.centerCrop // Crop from centre of images and scale to appropriate size.
-        visionRequests = [classificationRequest]
-        
-        loopCoreMLUpdate()
+//        guard let selectedModel = try? VNCoreMLModel(for: hand().model) else {
+//            fatalError("Could not load model. Ensure model has been drag and dropped (copied) to XCode Project.")
+//        }
+//
+//        let classificationRequest = VNCoreMLRequest(model: selectedModel, completionHandler: classificationCompleteHandler)
+//        classificationRequest.imageCropAndScaleOption = VNImageCropAndScaleOption.centerCrop // Crop from centre of images and scale to appropriate size.
+//        visionRequests = [classificationRequest]
+//
+//        loopCoreMLUpdate()
     }
     
     func loopCoreMLUpdate() {
@@ -239,12 +235,15 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         for word in words {
             DispatchQueue.main.async {
                 self.textGeometry.string = word
-                if(word == "Hello" || word == "hello") {
+                if(word == "Hello" || word == "hello" || word == "Hi") {
                     self.animateHello(armNode: self.arms.rootNode)
+                } else if(word == "Again" || word == "again") {
+                    self.animateAgain(armNode: self.arms.rootNode)
                 }
             }
-            usleep(400000)
+            usleep(500000)
         }
+        textGeometry.string = "..."
     }
     
     // Add text to bubble for the first time
@@ -378,10 +377,18 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     func animateHello(armNode: SCNNode) {
         var helloAnimation = CAAnimation()
         helloAnimation = CAAnimation.animationWithSceneNamed("art.scnassets/armHello")!
-        helloAnimation.fadeInDuration = 0.3
-        helloAnimation.fadeOutDuration = 0.3
+        helloAnimation.fadeInDuration = 0.2
+        helloAnimation.fadeOutDuration = 0.2
         helloAnimation.repeatCount = 1
         armNode.addAnimation(helloAnimation, forKey: "hello")
+    }
+    func animateAgain(armNode: SCNNode) {
+        var helloAnimation = CAAnimation()
+        helloAnimation = CAAnimation.animationWithSceneNamed("art.scnassets/armAgain")!
+        helloAnimation.fadeInDuration = 0.2
+        helloAnimation.fadeOutDuration = 0.2
+        helloAnimation.repeatCount = 1
+        armNode.addAnimation(helloAnimation, forKey: "again")
     }
 }
 
