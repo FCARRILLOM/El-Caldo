@@ -14,6 +14,7 @@ import CoreML
 import Speech
 import ROGoogleTranslate
 import Vision
+import Canvas
 
 
 
@@ -35,17 +36,22 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var textGeometry = SCNText()
     let textScale = 0.01
     let languagesKeys:  [String: String] = ["English" :"en", "Spanish" : "es", "German" : "de"]
-    
+    var isRecording = 7
     
     var speechText : String?
 
+    @IBOutlet weak var AnimView: CSAnimationView!
     @IBOutlet var sceneView: ARSCNView!
     
     @IBAction func Stop(_ sender: Any) {
-        
+        AnimView.isHidden = true
         stopRecording()
     }
     @IBAction func Start(_ sender: Any) {
+        AnimView.isHidden = false
+    
+        AnimView.startCanvasAnimation()
+        
         do {
             try startRecording()
         } catch {
@@ -136,7 +142,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             }
             
             if (firstObservation as AnyObject).identifier == "closedFist" {
-                stopRecording()
+              AnimView.isHidden = true  
+              stopRecording()
             }
         }
         
