@@ -23,6 +23,14 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     let speechRequest = SFSpeechAudioBufferRecognitionRequest()
     var recognitionTask: SFSpeechRecognitionTask?
     
+    // AR Nodes
+    var rootBubbleNode = SCNNode()
+    
+    // AR Text
+    var textNode = SCNNode()
+    var textGeometry = SCNText()
+    let textScale = 0.01
+    
     var speechText : String?
 
     @IBOutlet var sceneView: ARSCNView!
@@ -41,6 +49,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Set the scene to the view
         sceneView.scene = scene
         sceneView.scene.rootNode.isHidden = true
+        
+//        do {
+//            try startRecording()
+//        } catch {
+//            print("Error recording")
+//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -63,14 +77,17 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        // Root bubble node
+        // Assign root bubble node
         guard let bubbleNode = sceneView.scene.rootNode.childNode(withName: "Bubble",
                                                                   recursively: false)
             else {
                 print("No bubble")
                 return
         }
-        addTextToBubble(parentNode: bubbleNode)
+        rootBubbleNode = bubbleNode
+        
+        // Initialize and add text node with placeholder text
+        createTextNode()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -80,32 +97,51 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.session.pause()
     }
     
+    func updateTextRealTime(sentence: String) {
+        var newSentence = sentence
+        if let spaceIndex = sentence.lastIndex(of: " ") {
+            let i = sentence.index(spaceIndex, offsetBy: 1)
+            newSentence = String(sentence[i...])
+        }
+        textGeometry.string = newSentence
+        
+        let textLength = (textNode.geometry?.boundingBox.max.x)! * Float(textScale)
+        textNode.position = SCNVector3(textNode.position.x,
+                                       textNode.position.y,
+                                       rootBubbleNode.position.z + textLength/2) // Allign to left of bubble
+    }
+    
+    func updateTranslatedText(sentence: String) {
+        let words = sentence.components(separatedBy: " ")
+        for word in words {
+            textGeometry.string = word
+            usleep(400000)
+        }
+    }
+    
     // Add text to bubble for the first time
-    func addTextToBubble(parentNode: SCNNode) {
-        let parentPos = parentNode.position
-        let textScale = 0.009
-        
-        let textGeometry = SCNText(string: "...", extrusionDepth: 0.02)
+    func createTextNode() {
+        textGeometry = SCNText(string: "...", extrusionDepth: 0.02)
         textGeometry.firstMaterial?.diffuse.contents = UIColor.black
-                
-        // Length and height used to center text in bubble
-        let textLength = textGeometry.boundingBox.max.x * Float(textScale)
-        let textHeight = textGeometry.boundingBox.max.y * Float(textScale)
         
-        let textNode = SCNNode()
         textNode.geometry = textGeometry
-        textNode.position = SCNVector3(parentPos.x + parentNode.boundingBox.max.x,
-                                       parentPos.y - textHeight/2,
-                                       parentPos.z + textLength/2)
         textNode.scale = SCNVector3(textScale, textScale, 1)
         textNode.eulerAngles = SCNVector3(0, Float.pi/2, 0)
         
-        parentNode.addChildNode(textNode)
+        let parentPos = rootBubbleNode.position
+        // Length and height of the text used to center the text in bubble
+        let textLength = (textNode.geometry?.boundingBox.max.x)! * Float(textScale)
+        let textHeight = (textNode.geometry?.boundingBox.max.y)! * Float(textScale)
+        
+        textNode.position = SCNVector3(parentPos.x + rootBubbleNode.boundingBox.max.x, // Overlap over bubble
+                                       parentPos.y - textHeight/2, // Center vertically
+                                       parentPos.z + textLength/2) // Center horiztonally
+        
+        print(rootBubbleNode.boundingBox)
+        
+        rootBubbleNode.addChildNode(textNode)
     }
     
-    // Updates bubble with text
-    func updateText() {}
-            
     // Updates variable "speechText" with the speech recognized
     private func startRecording() throws {
         
@@ -125,11 +161,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             (result, _) in
             if let transcription = result?.bestTranscription {
                 self.speechText = transcription.formattedString
-                //if let texto = self.speechText{
-                  //  print(texto)
-                //}
-                //Translates the text
-                
+
+                if let texto = self.speechText{
+                    //print(texto)
+                    self.updateTextRealTime(sentence: texto)
+                }
             }
         }
     }
