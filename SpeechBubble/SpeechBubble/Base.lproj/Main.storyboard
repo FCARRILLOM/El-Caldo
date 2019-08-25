@@ -53,14 +53,39 @@
                                     <segue destination="Uz1-z6-SZH" kind="presentation" id="2F8-lA-HGb"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.69999999999999996" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="nWI-g9-juZ">
-                                <rect key="frame" x="385" y="329" width="447" height="44"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="nWI-g9-juZ">
+                                <rect key="frame" x="576" y="226" width="240" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZWl-ZM-tID" customClass="CSAnimationView">
+                                <rect key="frame" x="85" y="12" width="72" height="70"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="rjl614_large" translatesAutoresizingMaskIntoConstraints="NO" id="167-eV-s9g">
+                                        <rect key="frame" x="6" y="15" width="61" height="41"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="41" id="FgC-SC-89M"/>
+                                            <constraint firstAttribute="width" constant="61" id="lCr-pJ-cgg"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="70" id="Eka-Sm-wSm"/>
+                                    <constraint firstAttribute="width" constant="72" id="de6-3t-4YD"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="type" value="pop"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="delay ">
+                                        <integer key="value" value="2"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="duration">
+                                        <integer key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -74,6 +99,7 @@
                         <viewLayoutGuide key="safeArea" id="fQZ-KI-GVf"/>
                     </view>
                     <connections>
+                        <outlet property="AnimView" destination="ZWl-ZM-tID" id="hxM-aV-AQW"/>
                         <outlet property="DisplayText" destination="nWI-g9-juZ" id="rW8-M8-tg9"/>
                         <outlet property="sceneView" destination="BrB-h1-WRS" id="5nT-qQ-ynl"/>
                     </connections>
@@ -206,5 +232,6 @@
     </scenes>
     <resources>
         <image name="Windows_Settings_app_icon" width="2295" height="2295"/>
+        <image name="rjl614_large" width="591" height="586"/>
     </resources>
 </document>
