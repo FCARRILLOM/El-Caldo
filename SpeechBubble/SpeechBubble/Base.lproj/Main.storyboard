@@ -53,16 +53,8 @@
                                     <segue destination="Uz1-z6-SZH" kind="presentation" id="2F8-lA-HGb"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="nWI-g9-juZ">
-                                <rect key="frame" x="576" y="226" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZWl-ZM-tID" customClass="CSAnimationView">
-                                <rect key="frame" x="85" y="12" width="72" height="70"/>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZWl-ZM-tID" customClass="CSAnimationView">
+                                <rect key="frame" x="106" y="35" width="72" height="70"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="rjl614_large" translatesAutoresizingMaskIntoConstraints="NO" id="167-eV-s9g">
                                         <rect key="frame" x="6" y="15" width="61" height="41"/>
@@ -74,7 +66,9 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="Eka-Sm-wSm"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="72" id="bDm-Ve-k9N"/>
                                     <constraint firstAttribute="width" constant="72" id="de6-3t-4YD"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="70" id="eBk-3f-Hek"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="type" value="pop"/>
@@ -89,8 +83,10 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="ZWl-ZM-tID" firstAttribute="top" secondItem="fQZ-KI-GVf" secondAttribute="top" constant="35" id="6pe-VD-OCR"/>
                             <constraint firstItem="fQZ-KI-GVf" firstAttribute="trailing" secondItem="EFX-gd-7jb" secondAttribute="trailing" constant="20" id="76f-bW-dMI"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" id="GsS-dJ-CKf"/>
+                            <constraint firstItem="ZWl-ZM-tID" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" constant="62" id="OIr-K3-lM0"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="bottom" secondItem="fQZ-KI-GVf" secondAttribute="bottom" id="VpT-BR-CcM"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="trailing" secondItem="fQZ-KI-GVf" secondAttribute="trailing" id="XyZ-9z-H8e"/>
                             <constraint firstItem="EFX-gd-7jb" firstAttribute="top" secondItem="fQZ-KI-GVf" secondAttribute="top" constant="20" id="cge-MP-ZlK"/>
@@ -100,7 +96,6 @@
                     </view>
                     <connections>
                         <outlet property="AnimView" destination="ZWl-ZM-tID" id="hxM-aV-AQW"/>
-                        <outlet property="DisplayText" destination="nWI-g9-juZ" id="rW8-M8-tg9"/>
                         <outlet property="sceneView" destination="BrB-h1-WRS" id="5nT-qQ-ynl"/>
                     </connections>
                 </viewController>
