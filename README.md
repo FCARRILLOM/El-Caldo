@@ -1,4 +1,2 @@
 # El-Caldo
-Somos los cocineros!
-Prueba cuki
-
+Cocapods : https://github.com/prine/ROGoogleTranslate

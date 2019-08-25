@@ -9,14 +9,34 @@
 import UIKit
 import SceneKit
 import ARKit
+import AVFoundation
+import Speech
+import ROGoogleTranslate
+
+
 
 class ViewController: UIViewController, ARSCNViewDelegate {
+    
+    //Speech Recognizer
+    let audioEngine = AVAudioEngine()
+    let speechRecognizer = SFSpeechRecognizer()
+    let speechRequest = SFSpeechAudioBufferRecognitionRequest()
+    var recognitionTask: SFSpeechRecognitionTask?
+    
+    // AR Nodes
+    var rootBubbleNode = SCNNode()
+    
+    // AR Text
+    var textNode = SCNNode()
+    var textGeometry = SCNText()
+    let textScale = 0.01
+    
+    var speechText : String?
 
     @IBOutlet var sceneView: ARSCNView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Set the view's delegate
         sceneView.delegate = self
         
@@ -24,20 +44,50 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.showsStatistics = true
         
         // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+        let scene = SCNScene(named: "art.scnassets/SpeechBubble.scn")!
         
         // Set the scene to the view
         sceneView.scene = scene
+        sceneView.scene.rootNode.isHidden = true
+        
+//        do {
+//            try startRecording()
+//        } catch {
+//            print("Error recording")
+//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         // Create a session configuration
-        let configuration = ARWorldTrackingConfiguration()
+        let configuration = ARImageTrackingConfiguration()
+        
+        // Gets images to be tracked
+        guard let arImages = ARReferenceImage.referenceImages(inGroupNamed: "AR Resources",
+                                                              bundle: nil)
+            else {
+                print("No images")
+                return
+            }
+        configuration.trackingImages = arImages
 
         // Run the view's session
         sceneView.session.run(configuration)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        // Assign root bubble node
+        guard let bubbleNode = sceneView.scene.rootNode.childNode(withName: "Bubble",
+                                                                  recursively: false)
+            else {
+                print("No bubble")
+                return
+        }
+        rootBubbleNode = bubbleNode
+        
+        // Initialize and add text node with placeholder text
+        createTextNode()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -45,6 +95,88 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Pause the view's session
         sceneView.session.pause()
+    }
+    
+    func updateTextRealTime(sentence: String) {
+        var newSentence = sentence
+        if let spaceIndex = sentence.lastIndex(of: " ") {
+            let i = sentence.index(spaceIndex, offsetBy: 1)
+            newSentence = String(sentence[i...])
+        }
+        textGeometry.string = newSentence
+        
+        let textLength = (textNode.geometry?.boundingBox.max.x)! * Float(textScale)
+        textNode.position = SCNVector3(textNode.position.x,
+                                       textNode.position.y,
+                                       rootBubbleNode.position.z + textLength/2) // Allign to left of bubble
+    }
+    
+    func updateTranslatedText(sentence: String) {
+        let words = sentence.components(separatedBy: " ")
+        for word in words {
+            textGeometry.string = word
+            usleep(400000)
+        }
+    }
+    
+    // Add text to bubble for the first time
+    func createTextNode() {
+        textGeometry = SCNText(string: "...", extrusionDepth: 0.02)
+        textGeometry.firstMaterial?.diffuse.contents = UIColor.black
+        
+        textNode.geometry = textGeometry
+        textNode.scale = SCNVector3(textScale, textScale, 1)
+        textNode.eulerAngles = SCNVector3(0, Float.pi/2, 0)
+        
+        let parentPos = rootBubbleNode.position
+        // Length and height of the text used to center the text in bubble
+        let textLength = (textNode.geometry?.boundingBox.max.x)! * Float(textScale)
+        let textHeight = (textNode.geometry?.boundingBox.max.y)! * Float(textScale)
+        
+        textNode.position = SCNVector3(parentPos.x + rootBubbleNode.boundingBox.max.x, // Overlap over bubble
+                                       parentPos.y - textHeight/2, // Center vertically
+                                       parentPos.z + textLength/2) // Center horiztonally
+        
+        print(rootBubbleNode.boundingBox)
+        
+        rootBubbleNode.addChildNode(textNode)
+    }
+    
+    // Updates variable "speechText" with the speech recognized
+    private func startRecording() throws {
+        
+        //microphone
+        let node = audioEngine.inputNode
+        let recordingFormat = node.outputFormat(forBus: 0)
+        
+        node.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer, _) in
+            self.speechRequest.append(buffer)
+        }
+        
+        audioEngine.prepare()
+        try audioEngine.start()
+        
+        recognitionTask = speechRecognizer?.recognitionTask(with: speechRequest) {
+            [unowned self]
+            (result, _) in
+            if let transcription = result?.bestTranscription {
+                self.speechText = transcription.formattedString
+
+                if let texto = self.speechText{
+                    //print(texto)
+                    self.updateTextRealTime(sentence: texto)
+                }
+            }
+        }
+    }
+    
+    private func stopRecording() {
+        audioEngine.stop()
+        speechRequest.endAudio()
+        recognitionTask?.cancel()
+        audioEngine.inputNode.removeTap(onBus: 0)
+        self.speechText = ""
+        
     }
 
     // MARK: - ARSCNViewDelegate
@@ -57,6 +189,17 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         return node
     }
 */
+    
+    // Adds node when anchor is found
+    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        guard anchor is ARImageAnchor else { return }
+        sceneView.scene.rootNode.isHidden = false
+        print("QRCode found")
+        guard let bubbleNode = sceneView.scene.rootNode.childNode(withName: "Bubble",
+                                                                  recursively: false) else { return }
+        node.addChildNode(bubbleNode)
+        print("Adding bubble")
+    }
     
     func session(_ session: ARSession, didFailWithError error: Error) {
         // Present an error message to the user
@@ -71,5 +214,22 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     func sessionInterruptionEnded(_ session: ARSession) {
         // Reset tracking and/or remove existing anchors if consistent tracking is required
         
+    }
+    
+    
+    
+    func Translate(src: String,tgt: String,txt: String)->String?{
+       
+        
+        let params = ROGoogleTranslateParams(source: src,
+                                             target: tgt,
+                                             text:   txt)
+        var text : String?
+        let translator = ROGoogleTranslate()
+        
+        translator.translate(params: params) { (result) in
+             text = result;
+        }
+        return text
     }
 }
