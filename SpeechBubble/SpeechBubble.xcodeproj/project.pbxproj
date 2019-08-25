@@ -13,9 +13,11 @@
 		07128842231187D2009609D5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07128840231187D2009609D5 /* Main.storyboard */; };
 		07128844231187D4009609D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07128843231187D4009609D5 /* Assets.xcassets */; };
 		07128847231187D4009609D5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07128845231187D4009609D5 /* LaunchScreen.storyboard */; };
+		0F5F363ECA7B0E92EE120368 /* Pods_SpeechBubble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F377CF677B1150C354402791 /* Pods_SpeechBubble.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0034B9A1D3C55CA4C6448629 /* Pods-SpeechBubble.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpeechBubble.release.xcconfig"; path = "Target Support Files/Pods-SpeechBubble/Pods-SpeechBubble.release.xcconfig"; sourceTree = "<group>"; };
 		07128837231187D2009609D5 /* SpeechBubble.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpeechBubble.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0712883A231187D2009609D5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0712883C231187D2009609D5 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -24,6 +26,8 @@
 		07128843231187D4009609D5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		07128846231187D4009609D5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		07128848231187D4009609D5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4FD17FCDE198750E6E43A91E /* Pods-SpeechBubble.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpeechBubble.debug.xcconfig"; path = "Target Support Files/Pods-SpeechBubble/Pods-SpeechBubble.debug.xcconfig"; sourceTree = "<group>"; };
+		F377CF677B1150C354402791 /* Pods_SpeechBubble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SpeechBubble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F5F363ECA7B0E92EE120368 /* Pods_SpeechBubble.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +47,8 @@
 			children = (
 				07128839231187D2009609D5 /* SpeechBubble */,
 				07128838231187D2009609D5 /* Products */,
+				215078C66AC0A53B6DA02940 /* Pods */,
+				36EDFD38129CBFA5A506B209 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -67,6 +74,24 @@
 			path = SpeechBubble;
 			sourceTree = "<group>";
 		};
+		215078C66AC0A53B6DA02940 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4FD17FCDE198750E6E43A91E /* Pods-SpeechBubble.debug.xcconfig */,
+				0034B9A1D3C55CA4C6448629 /* Pods-SpeechBubble.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		36EDFD38129CBFA5A506B209 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F377CF677B1150C354402791 /* Pods_SpeechBubble.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -74,9 +99,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0712884B231187D4009609D5 /* Build configuration list for PBXNativeTarget "SpeechBubble" */;
 			buildPhases = (
+				71D12DA839EA50188E059F4D /* [CP] Check Pods Manifest.lock */,
 				07128833231187D2009609D5 /* Sources */,
 				07128834231187D2009609D5 /* Frameworks */,
 				07128835231187D2009609D5 /* Resources */,
+				AF196FD3352D0B58E41AF80E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -133,6 +160,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		71D12DA839EA50188E059F4D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SpeechBubble-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AF196FD3352D0B58E41AF80E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SpeechBubble/Pods-SpeechBubble-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SpeechBubble/Pods-SpeechBubble-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SpeechBubble/Pods-SpeechBubble-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		07128833231187D2009609D5 /* Sources */ = {
@@ -284,6 +353,7 @@
 		};
 		0712884C231187D4009609D5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4FD17FCDE198750E6E43A91E /* Pods-SpeechBubble.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -293,7 +363,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = FernandoCarrillo.SpeechBubble;
+				PRODUCT_BUNDLE_IDENTIFIER = PatoSaldivarSpeechBubble;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -302,6 +372,7 @@
 		};
 		0712884D231187D4009609D5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0034B9A1D3C55CA4C6448629 /* Pods-SpeechBubble.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -311,7 +382,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = FernandoCarrillo.SpeechBubble;
+				PRODUCT_BUNDLE_IDENTIFIER = PatoSaldivarSpeechBubble;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
