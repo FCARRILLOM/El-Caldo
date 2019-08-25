@@ -30,15 +30,34 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var textNode = SCNNode()
     var textGeometry = SCNText()
     let textScale = 0.01
+    let languagesKeys:  [String: String] = ["English" :"en", "Spanish" : "es", "German" : "de"]
+    
     
     var speechText : String?
 
     @IBOutlet var sceneView: ARSCNView!
-
+    
+    @IBAction func Stop(_ sender: Any) {
+        
+        stopRecording()
+    }
+    @IBAction func Start(_ sender: Any) {
+        do {
+            try startRecording()
+        } catch {
+            print("Error recording")
+        }
+    }
+    
+   
+    @IBOutlet weak var DisplayText: UITextView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Set the view's delegate
         sceneView.delegate = self
+       
         
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
@@ -49,12 +68,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Set the scene to the view
         sceneView.scene = scene
         sceneView.scene.rootNode.isHidden = true
-        
-//        do {
-//            try startRecording()
-//        } catch {
-//            print("Error recording")
-//        }
+       
+    
+       
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -175,7 +191,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         speechRequest.endAudio()
         recognitionTask?.cancel()
         audioEngine.inputNode.removeTap(onBus: 0)
-        self.speechText = ""
+        print(self.speechText)
+        if(UserDefaults.standard.string(forKey: "Input") != UserDefaults.standard.string(forKey: "Output")){
+        Translate(src: languagesKeys[UserDefaults.standard.string(forKey: "Input") ?? "English"]!, tgt: languagesKeys[UserDefaults.standard.string(forKey: "Output") ?? "Spanish"]!, txt: self.speechText ?? "")
+        }
         
     }
 
@@ -218,18 +237,21 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     
     
-    func Translate(src: String,tgt: String,txt: String)->String?{
+    func Translate(src: String,tgt: String,txt: String ){
        
-        
+       
         let params = ROGoogleTranslateParams(source: src,
                                              target: tgt,
                                              text:   txt)
-        var text : String?
+        
         let translator = ROGoogleTranslate()
         
-        translator.translate(params: params) { (result) in
-             text = result;
-        }
-        return text
+        
+            translator.translate(params: params) { (result) in
+                DispatchQueue.main.async(){
+                    self.DisplayText.text = result
+                }
+            }
+        
     }
 }

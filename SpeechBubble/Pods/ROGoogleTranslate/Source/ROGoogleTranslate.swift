@@ -88,8 +88,9 @@ open class ROGoogleTranslate {
                         }
                     }
                 })
-                
+               
                 httprequest.resume()
+                
             }
         }
     }
