@@ -15,7 +15,7 @@
 		07128847231187D4009609D5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07128845231187D4009609D5 /* LaunchScreen.storyboard */; };
 		0F5F363ECA7B0E92EE120368 /* Pods_SpeechBubble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F377CF677B1150C354402791 /* Pods_SpeechBubble.framework */; };
 		C424276A2311CA8500AC0F58 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42427692311CA8500AC0F58 /* SettingsViewController.swift */; };
-		C4B680422312D19F005625B5 /* hand.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = C4B680412312D19F005625B5 /* hand.mlmodel */; };
+		C4B680462312F49F005625B5 /* hand.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = C4B680452312F49F005625B5 /* hand.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,7 +30,7 @@
 		07128848231187D4009609D5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4FD17FCDE198750E6E43A91E /* Pods-SpeechBubble.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpeechBubble.debug.xcconfig"; path = "Target Support Files/Pods-SpeechBubble/Pods-SpeechBubble.debug.xcconfig"; sourceTree = "<group>"; };
 		C42427692311CA8500AC0F58 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		C4B680412312D19F005625B5 /* hand.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = hand.mlmodel; path = ../../../../../../Downloads/hand.mlmodel; sourceTree = "<group>"; };
+		C4B680452312F49F005625B5 /* hand.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = hand.mlmodel; sourceTree = "<group>"; };
 		F377CF677B1150C354402791 /* Pods_SpeechBubble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SpeechBubble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -71,9 +71,9 @@
 				0712883C231187D2009609D5 /* art.scnassets */,
 				0712883E231187D2009609D5 /* ViewController.swift */,
 				C42427692311CA8500AC0F58 /* SettingsViewController.swift */,
+				C4B680452312F49F005625B5 /* hand.mlmodel */,
 				07128840231187D2009609D5 /* Main.storyboard */,
 				07128843231187D4009609D5 /* Assets.xcassets */,
-				C4B680412312D19F005625B5 /* hand.mlmodel */,
 				07128845231187D4009609D5 /* LaunchScreen.storyboard */,
 				07128848231187D4009609D5 /* Info.plist */,
 			);
@@ -213,10 +213,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C4B680422312D19F005625B5 /* hand.mlmodel in Sources */,
 				0712883F231187D2009609D5 /* ViewController.swift in Sources */,
 				0712883B231187D2009609D5 /* AppDelegate.swift in Sources */,
 				C424276A2311CA8500AC0F58 /* SettingsViewController.swift in Sources */,
+				C4B680462312F49F005625B5 /* hand.mlmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
