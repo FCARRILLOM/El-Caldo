@@ -10,13 +10,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SpeechBubble/ViewController.swift"
-            timestampString = "588438717.91333"
+            timestampString = "588444887.5127"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "215"
-            endingLineNumber = "215"
-            landmarkName = "viewWillDisappear(_:)"
-            landmarkType = "7">
+            startingLineNumber = "216"
+            endingLineNumber = "216"
+            landmarkName = "ViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -26,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SpeechBubble/ViewController.swift"
-            timestampString = "588438717.913391"
+            timestampString = "588444887.5131299"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "217"
-            endingLineNumber = "217"
-            landmarkName = "viewWillDisappear(_:)"
+            startingLineNumber = "218"
+            endingLineNumber = "218"
+            landmarkName = "updateTextRealTime(sentence:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
