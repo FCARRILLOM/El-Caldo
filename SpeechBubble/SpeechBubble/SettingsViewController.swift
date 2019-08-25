@@ -14,10 +14,15 @@ class SettingsViewController: UIViewController,UIPickerViewDataSource, UIPickerV
     @IBOutlet weak var Language2: UILabel!
     @IBOutlet weak var PickerView1: UIPickerView!
     @IBOutlet weak var PickerView2: UIPickerView!
-    
 
-
-    let languages = ["English", "Spanish", "German"]
+    let languages = ["English",
+                     "French",
+                     "German",
+                     "Italian",
+                     "Japanese",
+                     "Korean",
+                     "Russian",
+                     "Spanish"]
     
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -46,19 +51,12 @@ class SettingsViewController: UIViewController,UIPickerViewDataSource, UIPickerV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       Language1.text = UserDefaults.standard.string(forKey: "Input")
+        Language1.text = UserDefaults.standard.string(forKey: "Input")
         Language2.text = UserDefaults.standard.string(forKey: "Output")
         PickerView1.selectRow(UserDefaults.standard.integer(forKey: "InputRow"), inComponent: 0, animated: true)
         PickerView2.selectRow(UserDefaults.standard.integer(forKey: "OutputRow"), inComponent: 0, animated: true)
     }
-        
-        
-        
-        
-
-        // Do any additional setup after loading the view.
     
-
     /*
     // MARK: - Navigation
 
