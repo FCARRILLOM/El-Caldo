@@ -14,9 +14,9 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "14096175B0E4837F944444B37E695933"
-               BuildableName = "Pods-SpeechBubble.framework"
-               BlueprintName = "Pods-SpeechBubble"
+               BlueprintIdentifier = "E95AC4C15E822F1C7D47D2F06A9218F5"
+               BuildableName = "Canvas.framework"
+               BlueprintName = "Canvas"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
